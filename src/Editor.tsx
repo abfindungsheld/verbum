@@ -71,7 +71,6 @@ const Editor = ({
 }: IEditorProps) => {
   const [editor] = useLexicalComposerContext();
   const [activeEditor, setActiveEditor] = useState(editor);
-
   const editorStateRef = useRef(null);
   const { historyState } = useSharedHistoryContext();
   const {
@@ -88,23 +87,21 @@ const Editor = ({
   }, []);
 
   useEffect(() => {
-    if (template) {
-      editor.update(() => {
-        // In the browser you can use the native DOMParser API to parse the HTML string.
-        const parser = new DOMParser();
-        const dom = parser.parseFromString(template, 'text/html');
+    editor.update(() => {
+      // In the browser you can use the native DOMParser API to parse the HTML string.
+      const parser = new DOMParser();
+      const dom = parser.parseFromString(template, 'text/html');
 
-        // Once you have the DOM instance it's easy to generate LexicalNodes.
-        const nodes = $generateNodesFromDOM(editor, dom);
+      // Once you have the DOM instance it's easy to generate LexicalNodes.
+      const nodes = $generateNodesFromDOM(editor, dom);
 
-        // Select the root
-        $getRoot().select();
+      // Select the root
+      $getRoot().select();
 
-        // Insert them at a selection.
-        $insertNodes(nodes);
-      })
-    }
-  }, [template])
+      // Insert them at a selection.
+      $insertNodes(nodes);
+    })
+  }, [])
 
   return (
     <EditorContext.Provider

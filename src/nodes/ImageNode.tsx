@@ -145,9 +145,9 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     this.__maxWidth = maxWidth;
     this.__width = width || 'inherit';
     this.__height = height || 'inherit';
-    this.__showCaption = showCaption || false;
+    this.__showCaption = false;
     this.__caption = caption || createEditor();
-    this.__captionsEnabled = captionsEnabled || captionsEnabled === undefined;
+    this.__captionsEnabled = false;
   }
 
   exportJSON(): SerializedImageNode {

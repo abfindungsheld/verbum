@@ -28,7 +28,7 @@ export default function ImageResizer({
   imageRef,
   maxWidth,
   editor,
-  showCaption,
+    showCaption,
   setShowCaption,
 }: {
   editor: LexicalEditor;
@@ -215,17 +215,6 @@ export default function ImageResizer({
   };
   return (
     <>
-      {!showCaption && (
-        <button
-          className="image-caption-button"
-          ref={buttonRef}
-          onClick={() => {
-            setShowCaption(!showCaption);
-          }}
-        >
-          Add Caption
-        </button>
-      )}
       <div
         className="image-resizer image-resizer-n"
         onPointerDown={(event) => {
