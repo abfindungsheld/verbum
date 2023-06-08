@@ -36,10 +36,10 @@ import Placeholder from './ui/Placeholder';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import EditorContext from './context/EditorContext';
-import { LexicalEditor } from 'lexical';
+import { $getRoot, $insertNodes, LexicalEditor } from 'lexical';
 import { useTranslation } from 'react-i18next';
 import DragDropPaste from './plugins/DragDropPastePlugin';
-import { $generateHtmlFromNodes } from '@lexical/html';
+import { $generateHtmlFromNodes, $generateNodesFromDOM } from '@lexical/html';
 
 interface IEditorProps {
   children?: ReactNode;
@@ -52,6 +52,7 @@ interface IEditorProps {
   isEditable?: boolean;
   locale?: 'en' | 'fr' | 'ptBr' | 'ru' | null;
   onChange?: (editorState: string, editorInstance?: LexicalEditor) => void;
+  template?: string;
 }
 
 
@@ -65,6 +66,7 @@ const Editor = ({
   placeholder = '',
   isEditable = true,
   locale = null,
+  template,
   onChange,
 }: IEditorProps) => {
   const [editor] = useLexicalComposerContext();
@@ -84,6 +86,25 @@ const Editor = ({
 
     if (locale) i18n.changeLanguage(locale);
   }, []);
+
+  useEffect(() => {
+    if (template) {
+      editor.update(() => {
+        // In the browser you can use the native DOMParser API to parse the HTML string.
+        const parser = new DOMParser();
+        const dom = parser.parseFromString(template, 'text/html');
+
+        // Once you have the DOM instance it's easy to generate LexicalNodes.
+        const nodes = $generateNodesFromDOM(editor, dom);
+
+        // Select the root
+        $getRoot().select();
+
+        // Insert them at a selection.
+        $insertNodes(nodes);
+      })
+    }
+  }, [template])
 
   return (
     <EditorContext.Provider
