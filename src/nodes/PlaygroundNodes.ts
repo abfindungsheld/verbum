@@ -28,6 +28,7 @@ import { StickyNode } from './StickyNode';
 import { TweetNode } from './TweetNode';
 import { TypeaheadNode } from './TypeaheadNode';
 import { YouTubeNode } from './YouTubeNode';
+import {ExtendedTextNode} from "../plugins/ExtendedTextNode";
 
 const PlaygroundNodes: Array<Class<LexicalNode>> = [
   HeadingNode,
@@ -54,6 +55,7 @@ const PlaygroundNodes: Array<Class<LexicalNode>> = [
   TweetNode,
   YouTubeNode,
   MarkNode,
+  ExtendedTextNode
 ];
 
 export default PlaygroundNodes;
