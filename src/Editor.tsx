@@ -101,7 +101,7 @@ const Editor = ({
       // Insert them at a selection.
       $insertNodes(nodes);
     })
-  }, [])
+  }, [template])
 
   return (
     <EditorContext.Provider
