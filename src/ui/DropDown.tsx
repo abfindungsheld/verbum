@@ -82,7 +82,7 @@ export default function DropDown({
 
       {showDropDown &&
         createPortal(
-          <div className="dropdown" ref={dropDownRef}>
+          <div className="dropdown dropdown-lexical" ref={dropDownRef}>
             {children}
           </div>,
           document.body

@@ -8,6 +8,10 @@
 
 @import 'https://fonts.googleapis.com/css?family=Reenie+Beanie';
 
+* {
+  box-sizing: content-box;
+}
+
 .editor-shell {
   margin: 20px auto;
   border-radius: 2px;
