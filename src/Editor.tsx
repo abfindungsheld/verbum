@@ -39,6 +39,7 @@ import EditorContext from './context/EditorContext';
 import { LexicalEditor } from 'lexical';
 import { useTranslation } from 'react-i18next';
 import DragDropPaste from './plugins/DragDropPastePlugin';
+import { $generateHtmlFromNodes } from '@lexical/html';
 
 interface IEditorProps {
   children?: ReactNode;
@@ -52,6 +53,7 @@ interface IEditorProps {
   locale?: 'en' | 'fr' | 'ptBr' | 'ru' | null;
   onChange?: (editorState: string, editorInstance?: LexicalEditor) => void;
 }
+
 
 const Editor = ({
   children,
@@ -105,9 +107,13 @@ const Editor = ({
             ErrorBoundary={LexicalErrorBoundary}
           />
           <OnChangePlugin
-            onChange={(editorState) => {
-              onChange?.(JSON.stringify(editorState), activeEditor);
-              return (editorStateRef.current = editorState);
+            onChange={(editorState, editor ) => {
+              if (editor) {
+                editor.update(() => {
+                  const raw = $generateHtmlFromNodes(editor, null)
+                  return onChange?.(raw)
+                })
+              }
             }}
           />
           <MarkdownShortcutPlugin />

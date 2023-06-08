@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState} from 'react';
 import { EditorComposer, Editor, Divider } from '../src';
 import ToolbarPlugin from '../src/plugins/ToolbarPlugin/ToolbarPlugin';
 
@@ -21,7 +21,8 @@ import {
   UnderlineButton,
   UndoButton,
 } from '../src/plugins/ToolbarPlugin/components';
-import { $createParagraphNode, $createTextNode, $getRoot } from 'lexical';
+import { $createParagraphNode, $createTextNode, $getRoot, LexicalEditor, EditorState } from 'lexical';
+import {$generateHtmlFromNodes } from '@lexical/html';
 
 export default {
   title: 'Verbum',
@@ -36,26 +37,32 @@ const initialState = () => {
   root.selectEnd();
 };
 
-export const FullEditor = () => (
-  <EditorComposer initialEditorState={initialState}>
-    <Editor>
-      <ToolbarPlugin>
-        <FontFamilyDropdown />
-        <FontSizeDropdown />
-        <Divider />
-        <BoldButton />
-        <ItalicButton />
-        <UnderlineButton />
-        <CodeFormatButton />
-        <InsertLinkButton />
-        <TextColorPicker />
-        <BackgroundColorPicker />
-        <TextFormatDropdown />
-        <Divider />
-        <InsertDropdown />
-        <Divider />
-        <AlignDropdown />
-      </ToolbarPlugin>
-    </Editor>
-  </EditorComposer>
-);
+export const FullEditor = () => {
+
+  const onChange = (html) => {
+    console.log('onChange html', html)
+  }
+  return (
+    <EditorComposer initialEditorState={initialState}>
+      <Editor onChange={onChange}>
+        <ToolbarPlugin>
+          <FontFamilyDropdown/>
+          <FontSizeDropdown/>
+          <Divider/>
+          <BoldButton/>
+          <ItalicButton/>
+          <UnderlineButton/>
+          <CodeFormatButton/>
+          <InsertLinkButton/>
+          <TextColorPicker/>
+          <BackgroundColorPicker/>
+          <TextFormatDropdown/>
+          <Divider/>
+          <InsertDropdown/>
+          <Divider/>
+          <AlignDropdown/>
+        </ToolbarPlugin>
+      </Editor>
+    </EditorComposer>
+  )
+}
