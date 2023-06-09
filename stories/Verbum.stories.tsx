@@ -41,7 +41,7 @@ const template = `<p><span style="color: rgb(0, 0, 0); font-size: 10pt;">{{PARTN
 export const FullEditor = () => {
 
   const onChange = (html) => {
-    console.log('onChange html', html)
+    // console.log('onChange html', html)
   }
   return (
     <EditorComposer initialEditorState={initialState}>

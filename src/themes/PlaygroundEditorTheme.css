@@ -63,7 +63,7 @@
   font-style: italic;
 }
 .PlaygroundEditorTheme__textUnderline {
-  text-decoration: underline;
+  text-decoration: underline !important;
 }
 .PlaygroundEditorTheme__textStrikethrough {
   text-decoration: line-through;
