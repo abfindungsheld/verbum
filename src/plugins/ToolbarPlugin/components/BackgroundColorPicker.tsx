@@ -9,6 +9,9 @@ const BackgroundColorPicker = () => {
 
   const onBgColorSelect = useCallback(
     (value: string) => {
+      if (value === 'rgba(0, 0, 0, 0)' || value === '#000000') {  // protection from black bg in table or another place in editor
+        return null
+      }
       applyStyleText({ 'background-color': value });
     },
     [applyStyleText]
