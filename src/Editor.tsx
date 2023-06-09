@@ -36,7 +36,7 @@ import Placeholder from './ui/Placeholder';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import EditorContext from './context/EditorContext';
-import { $getRoot, $insertNodes, LexicalEditor } from 'lexical';
+import {$createParagraphNode, $getRoot, $insertNodes, LexicalEditor} from 'lexical';
 import { useTranslation } from 'react-i18next';
 import DragDropPaste from './plugins/DragDropPastePlugin';
 import { $generateHtmlFromNodes, $generateNodesFromDOM } from '@lexical/html';
@@ -91,15 +91,15 @@ const Editor = ({
       // In the browser you can use the native DOMParser API to parse the HTML string.
       const parser = new DOMParser();
       const dom = parser.parseFromString(template, 'text/html');
+      const root = $getRoot()
 
-      // Once you have the DOM instance it's easy to generate LexicalNodes.
       const nodes = $generateNodesFromDOM(editor, dom);
 
-      // Select the root
-      $getRoot().select();
+      const paragraphNode = $createParagraphNode();
 
-      // Insert them at a selection.
-      $insertNodes(nodes);
+      nodes.forEach((n)=> paragraphNode.append(n))
+
+      root.append(paragraphNode);
     })
   }, [template])
 
