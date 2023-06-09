@@ -21,7 +21,7 @@ const EditorComposer = ({ children, initialEditorState }: IEditorComposer) => {
     onError: (error) => {
       throw error;
     },
-    // theme: PlaygroundEditorTheme,
+    theme: PlaygroundEditorTheme,
     editorState: initialEditorState,
   };
   return (

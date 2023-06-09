@@ -74,7 +74,7 @@ function patchStyleConversion(
         const backgroundColor = node.style.backgroundColor;
         const color = node.style.color;
         const fontFamily = node.style.fontFamily;
-        const fontWeight = node.style.fontWeight;
+        // const fontWeight = node.style.fontWeight;
         const fontSize = node.style.fontSize;
         const textDecoration = node.style.textDecoration;
 
@@ -88,7 +88,7 @@ function patchStyleConversion(
                         backgroundColor ? `background-color: ${backgroundColor}` : null,
                         color ? `color: ${color}` : null,
                         fontFamily ? `font-family: ${fontFamily}` : null,
-                        fontWeight ? `font-weight: ${fontWeight}` : null,
+                        // fontWeight ? `font-weight: ${fontWeight}` : null,
                         fontSize ? `font-size: ${fontSize}` : null,
                         textDecoration ? `text-decoration: ${textDecoration}` : null,
                     ]
