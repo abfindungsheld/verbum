@@ -6,10 +6,10 @@ import { FontOptions } from '../../../types';
 const defaultFontFamilyOptions: FontOptions = [
   ['Arial', 'Arial'],
   ['Courier New', 'Courier New'],
-  ['Georgia', 'Georgia'],
+  ['Courier', 'Courier'],
+  ['Roboto', 'Roboto'],
   ['Times New Roman', 'Times New Roman'],
-  ['Trebuchet MS', 'Trebuchet MS'],
-  ['Verdana', 'Verdana'],
+  ['Calibri', 'Calibri'],
 ];
 
 interface IFontFamilyDropdown {
