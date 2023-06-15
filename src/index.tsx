@@ -21,6 +21,7 @@ import {
   TextFormatDropdown,
   UnderlineButton,
   UndoButton,
+  LineHeightDropdown,
 } from './plugins/ToolbarPlugin/components';
 
 import * as ToolbarTypes from './types';
@@ -46,4 +47,5 @@ export {
   ToolbarTypes,
   Divider,
   MentionsPlugin,
+  LineHeightDropdown,
 };

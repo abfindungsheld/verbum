@@ -73,6 +73,7 @@ const ToolbarPlugin = ({
   defaultFontColor = '#000',
   defaultBgColor = '#fff',
   defaultFontFamily = 'Arial',
+  defaultLineHeight = '1em',
 }: IToolbarProps) => {
   const [insertExists, InsertComponent] = useChild(children, InsertDropdown);
   const [alignExists, AlignComponent] = useChild(children, AlignDropdown);
@@ -97,6 +98,7 @@ const ToolbarPlugin = ({
   const [canRedo, setCanRedo] = useState(false);
   const [isRTL, setIsRTL] = useState(false);
   const [codeLanguage, setCodeLanguage] = useState<string>('');
+  const [lineHeight, setLineHeight] = useState<string>(defaultLineHeight);
 
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
@@ -178,6 +180,13 @@ const ToolbarPlugin = ({
           'font-family',
           defaultFontFamily
         )
+      );
+      setLineHeight(
+          $getSelectionStyleValueForProperty(
+              selection,
+              'line-height',
+              defaultFontFamily
+          )
       );
     }
   }, [activeEditor]);
@@ -263,6 +272,7 @@ const ToolbarPlugin = ({
         selectedElementKey,
         codeLanguage,
         blockType,
+        lineHeight
       }}
     >
       <div className="toolbar">

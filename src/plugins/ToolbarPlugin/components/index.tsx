@@ -15,6 +15,7 @@ import TextColorPicker from './TextColorPicker';
 import TextFormatDropdown from './TextFormatDropdown';
 import UnderlineButton from './UnderlineButton';
 import UndoButton from './UndoButton';
+import LineHeightDropdown from "./LineHeightDropdown";
 
 export {
   AlignDropdown,
@@ -34,4 +35,5 @@ export {
   TextFormatDropdown,
   UnderlineButton,
   UndoButton,
+  LineHeightDropdown,
 };

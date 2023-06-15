@@ -980,6 +980,7 @@ i.chevron-down {
   height: 8px;
   width: 8px;
   background-image: url(images/icons/chevron-down.svg);
+  background-repeat: no-repeat;
 }
 
 .action-button {

@@ -40,6 +40,8 @@ const FontSizeDropdown = ({
         onChange={onFontSizeSelect}
         options={fontSizeOptions}
         value={fontSize}
+        measureType='px'
+        title='Font size'
       />
       <i className="chevron-down inside" />
     </>

@@ -20,6 +20,7 @@ import {
   TextFormatDropdown,
   UnderlineButton,
   UndoButton,
+  LineHeightDropdown,
 } from '../src/plugins/ToolbarPlugin/components';
 import { $createParagraphNode, $createTextNode, $getRoot, LexicalEditor, EditorState } from 'lexical';
 import {$generateHtmlFromNodes } from '@lexical/html';
@@ -49,6 +50,7 @@ export const FullEditor = () => {
         <ToolbarPlugin>
           <FontFamilyDropdown/>
           <FontSizeDropdown/>
+          <LineHeightDropdown/>
           <Divider/>
           <BoldButton/>
           <ItalicButton/>

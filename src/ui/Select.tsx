@@ -4,7 +4,7 @@ const Select = ({
   onChange,
   className,
   options,
-  value,
+  value, measureType = 'px', title = ''
 }: {
   className: string;
   onChange: (event: { target: { value: string } }) => void;
@@ -12,10 +12,10 @@ const Select = ({
   value: string;
 }): JSX.Element => {
   return (
-    <select className={className} onChange={onChange} value={value}>
+    <select className={className} onChange={onChange} value={value} title={title}>
       {options.map(([option, text]) => (
         <option key={option} value={option}>
-          {text}
+          {text.replace(measureType, '')}
         </option>
       ))}
     </select>
