@@ -10,6 +10,8 @@ const Select = ({
   onChange: (event: { target: { value: string } }) => void;
   options: [string, string][];
   value: string;
+  measureType?: string;
+  title?: string;
 }): JSX.Element => {
   return (
     <select className={className} onChange={onChange} value={value} title={title}>
