@@ -65,6 +65,7 @@ interface IToolbarProps {
   defaultFontColor?: string /** The default selected font color in the toolbar */;
   defaultBgColor?: string /** The default selected background color in the toolbar */;
   defaultFontFamily?: string /** The default selected font family in the toolbar */;
+  defaultLineHeight?: string /** The default selected line height in the toolbar */;
 }
 
 const ToolbarPlugin = ({
