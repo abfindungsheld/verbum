@@ -66,6 +66,7 @@ interface IToolbarProps {
   defaultBgColor?: string /** The default selected background color in the toolbar */;
   defaultFontFamily?: string /** The default selected font family in the toolbar */;
   defaultLineHeight?: string /** The default selected line height in the toolbar */;
+  defaultBorderColor?: string /** The default selected border color in the toolbar */;
 }
 
 const ToolbarPlugin = ({
@@ -75,6 +76,7 @@ const ToolbarPlugin = ({
   defaultBgColor = '#fff',
   defaultFontFamily = 'Arial',
   defaultLineHeight = '1em',
+  defaultBorderColor = '',
 }: IToolbarProps) => {
   const [insertExists, InsertComponent] = useChild(children, InsertDropdown);
   const [alignExists, AlignComponent] = useChild(children, AlignDropdown);
@@ -100,6 +102,7 @@ const ToolbarPlugin = ({
   const [isRTL, setIsRTL] = useState(false);
   const [codeLanguage, setCodeLanguage] = useState<string>('');
   const [lineHeight, setLineHeight] = useState<string>(defaultLineHeight);
+  const [borderColor, setBorderColor] = useState<string>(defaultLineHeight);
 
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
@@ -189,6 +192,13 @@ const ToolbarPlugin = ({
               defaultFontFamily
           )
       );
+      setBorderColor(
+          $getSelectionStyleValueForProperty(
+              selection,
+              'border',
+              defaultFontFamily
+          )
+      );
     }
   }, [activeEditor]);
 
@@ -273,7 +283,8 @@ const ToolbarPlugin = ({
         selectedElementKey,
         codeLanguage,
         blockType,
-        lineHeight
+        lineHeight,
+        borderColor
       }}
     >
       <div className="toolbar">

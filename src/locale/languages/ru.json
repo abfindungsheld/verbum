@@ -13,6 +13,9 @@
     "backgroundColorPicker": {
       "Description": "Цвет фона"
     },
+    "TableBorderColorPicker": {
+      "Description": "Цвет рамки"
+    },
     "blockFormatDropdown": {
       "Description": "Форматирование текста",
       "paragraph": "Обычный",

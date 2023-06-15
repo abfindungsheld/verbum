@@ -22,7 +22,8 @@ interface IToolbarContext {
   selectedElementKey: string;
   applyStyleText: (styles: Record<string, string>) => void;
   insertLink: () => void;
-  lineHeight: string
+  lineHeight: string;
+  borderColor: string
 }
 
 const ToolbarContext = createContext<IToolbarContext | null>(null);

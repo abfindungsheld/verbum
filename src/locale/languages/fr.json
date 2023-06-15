@@ -13,6 +13,9 @@
     "backgroundColorPicker": {
       "Description": "Mise en forme de la couleur de fond"
     },
+    "tableBorderColorPicker": {
+      "Description": "Formatting border color"
+    },
     "blockFormatDropdown": {
       "Description": "Options de mise en forme pour le style de texte",
       "paragraph": "Normal",

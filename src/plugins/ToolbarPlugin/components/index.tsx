@@ -16,6 +16,7 @@ import TextFormatDropdown from './TextFormatDropdown';
 import UnderlineButton from './UnderlineButton';
 import UndoButton from './UndoButton';
 import LineHeightDropdown from "./LineHeightDropdown";
+import TableBorderColorPicker from './TableBorderColorPicker'
 
 export {
   AlignDropdown,
@@ -36,4 +37,5 @@ export {
   UnderlineButton,
   UndoButton,
   LineHeightDropdown,
+  TableBorderColorPicker
 };

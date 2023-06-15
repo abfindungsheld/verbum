@@ -6,6 +6,7 @@ import MentionsPlugin from './plugins/MentionsPlugin';
 import {
   AlignDropdown,
   BackgroundColorPicker,
+  TableBorderColorPicker,
   BlockFormatDropdown,
   BoldButton,
   CodeFormatButton,
@@ -33,6 +34,7 @@ export {
   ToolbarPlugin,
   AlignDropdown,
   BackgroundColorPicker,
+  TableBorderColorPicker,
   BoldButton,
   CodeFormatButton,
   FloatingLinkEditor,
