@@ -43,7 +43,6 @@ const FontSizeDropdown = ({
       <DropDown
         buttonClassName={'toolbar-item font-size'}
         buttonLabel={fontSize.slice(0,2)}
-        buttonIconClassName={'icon block-type font-family'}
         buttonAriaLabel={'Formatting options for font family'}>
         {fontSizeOptions.map(
           ([option, text]) => (
