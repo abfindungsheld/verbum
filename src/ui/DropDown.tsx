@@ -6,6 +6,30 @@
  *
  */
 
+export function DropDownItem({
+   children,
+   className,
+   onClick,
+   title,
+ }: {
+  children: React.ReactNode;
+  className: string;
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  title?: string;
+}) {
+  const ref = useRef<HTMLButtonElement>(null);
+  return (
+    <button
+      className={className}
+      onClick={onClick}
+      ref={ref}
+      title={title}
+      type="button">
+      {children}
+    </button>
+  );
+}
+
 import { useEffect, useRef, useState } from 'react';
 import * as React from 'react';
 import { createPortal } from 'react-dom';

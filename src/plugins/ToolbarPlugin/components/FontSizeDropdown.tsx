@@ -1,24 +1,29 @@
 import React, { useCallback, useContext } from 'react';
-import Select from '../../../ui/Select';
+import DropDown, {DropDownItem} from '../../../ui/DropDown';
 import ToolbarContext from '../../../context/ToolbarContext';
 import { FontOptions } from '../../../types';
 
 const defaultFontSizeOptions: FontOptions = [
-  ['10px', '10px'],
-  ['11px', '11px'],
-  ['12px', '12px'],
-  ['13px', '13px'],
-  ['14px', '14px'],
-  ['15px', '15px'],
-  ['16px', '16px'],
-  ['17px', '17px'],
-  ['18px', '18px'],
-  ['19px', '19px'],
-  ['20px', '20px'],
+  ['10px', '10'],
+  ['11px', '11'],
+  ['12px', '12'],
+  ['13px', '13'],
+  ['14px', '14'],
+  ['15px', '15'],
+  ['16px', '16'],
+  ['17px', '17'],
+  ['18px', '18'],
+  ['19px', '19'],
+  ['20px', '20'],
 ];
 
 interface IFontSizeDropdown {
   fontSizeOptions?: FontOptions;
+}
+
+function dropDownActiveClass(active: boolean) {
+  if (active) return 'active dropdown-item-active';
+  else return '';
 }
 
 const FontSizeDropdown = ({
@@ -27,23 +32,30 @@ const FontSizeDropdown = ({
   const { fontSize, applyStyleText } = useContext(ToolbarContext);
 
   const onFontSizeSelect = useCallback(
-    (e) => {
-      applyStyleText({ 'font-size': e.target.value });
+    (value) => {
+      applyStyleText({ 'font-size': value });
     },
     [applyStyleText]
   );
 
   return (
     <>
-      <Select
-        className="toolbar-item font-size"
-        onChange={onFontSizeSelect}
-        options={fontSizeOptions}
-        value={fontSize}
-        measureType='px'
-        title='Font size'
-      />
-      <i className="chevron-down inside" />
+      <DropDown
+        buttonClassName={'toolbar-item font-size'}
+        buttonLabel={fontSize.slice(0,2)}
+        buttonIconClassName={'icon block-type font-family'}
+        buttonAriaLabel={'Formatting options for font family'}>
+        {fontSizeOptions.map(
+          ([option, text]) => (
+            <DropDownItem
+              className={`item ${dropDownActiveClass(fontSize === option)} fontsize-item`}
+              onClick={() => onFontSizeSelect(option)}
+              key={option}>
+              <span style={{ fontSize: option }} className="text">{text}</span>
+            </DropDownItem>
+          ),
+        )}
+      </DropDown>
     </>
   );
 };
