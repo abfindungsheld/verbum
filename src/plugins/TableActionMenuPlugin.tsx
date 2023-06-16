@@ -35,6 +35,7 @@ import * as React from 'react';
 import { ReactPortal, useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
+import {addClassNamesToElement} from "@lexical/utils";
 
 type TableCellActionMenuProps = Readonly<{
   contextRef: { current: null | HTMLElement };
@@ -263,72 +264,97 @@ function TableActionMenu({
     });
   }, [editor, tableCellNode, clearTableSelection, onClose]);
 
-  const toggleTableRowIsHeader = useCallback(() => {
-    editor.update(() => {
-      const tableNode = $getTableNodeFromLexicalNodeOrThrow(tableCellNode);
 
-      const tableRowIndex = $getTableRowIndexFromTableCellNode(tableCellNode);
+  const makeTransparent = useCallback(
+      () => {
+        editor.update(() => {
 
-      const tableRows = tableNode.getChildren();
+          const tableNode = $getTableNodeFromLexicalNodeOrThrow(tableCellNode);
+          const tableElement = editor.getElementByKey(
+              tableNode.getKey()
+          ) as HTMLTableElementWithWithTableSelectionState;
 
-      if (tableRowIndex >= tableRows.length || tableRowIndex < 0) {
-        throw new Error('Expected table cell to be inside of table row.');
-      }
+          addClassNamesToElement(tableElement, ' transparentBorder')
+          clearTableSelection();
 
-      const tableRow = tableRows[tableRowIndex];
-
-      if (!$isTableRowNode(tableRow)) {
-        throw new Error('Expected table row');
-      }
-
-      tableRow.getChildren().forEach((tableCell) => {
-        if (!$isTableCellNode(tableCell)) {
-          throw new Error('Expected table cell');
-        }
-
-        tableCell.toggleHeaderStyle(TableCellHeaderStates.ROW);
-      });
-
-      clearTableSelection();
-      onClose();
-    });
-  }, [editor, tableCellNode, clearTableSelection, onClose]);
-
-  const toggleTableColumnIsHeader = useCallback(() => {
-    editor.update(() => {
-      const tableNode = $getTableNodeFromLexicalNodeOrThrow(tableCellNode);
-
-      const tableColumnIndex =
-        $getTableColumnIndexFromTableCellNode(tableCellNode);
-
-      const tableRows = tableNode.getChildren();
-
-      for (let r = 0; r < tableRows.length; r++) {
-        const tableRow = tableRows[r];
-
-        if (!$isTableRowNode(tableRow)) {
-          throw new Error('Expected table row');
-        }
-
-        const tableCells = tableRow.getChildren();
-
-        if (tableColumnIndex >= tableCells.length || tableColumnIndex < 0) {
-          throw new Error('Expected table cell to be inside of table row.');
-        }
-
-        const tableCell = tableCells[tableColumnIndex];
-
-        if (!$isTableCellNode(tableCell)) {
-          throw new Error('Expected table cell');
-        }
-
-        tableCell.toggleHeaderStyle(TableCellHeaderStates.COLUMN);
-      }
-
-      clearTableSelection();
-      onClose();
-    });
-  }, [editor, tableCellNode, clearTableSelection, onClose]);
+          onClose();
+        });
+      },
+      [
+        editor,
+        tableCellNode,
+        selectionCounts.columns,
+        clearTableSelection,
+        onClose,
+      ]
+  );
+  //
+  // const toggleTableRowIsHeader = useCallback(() => {
+  //   editor.update(() => {
+  //     const tableNode = $getTableNodeFromLexicalNodeOrThrow(tableCellNode);
+  //
+  //     const tableRowIndex = $getTableRowIndexFromTableCellNode(tableCellNode);
+  //
+  //     const tableRows = tableNode.getChildren();
+  //
+  //     if (tableRowIndex >= tableRows.length || tableRowIndex < 0) {
+  //       throw new Error('Expected table cell to be inside of table row.');
+  //     }
+  //
+  //     const tableRow = tableRows[tableRowIndex];
+  //
+  //     if (!$isTableRowNode(tableRow)) {
+  //       throw new Error('Expected table row');
+  //     }
+  //
+  //     tableRow.getChildren().forEach((tableCell) => {
+  //       if (!$isTableCellNode(tableCell)) {
+  //         throw new Error('Expected table cell');
+  //       }
+  //
+  //       tableCell.toggleHeaderStyle(TableCellHeaderStates.ROW);
+  //     });
+  //
+  //     clearTableSelection();
+  //     onClose();
+  //   });
+  // }, [editor, tableCellNode, clearTableSelection, onClose]);
+  //
+  // const toggleTableColumnIsHeader = useCallback(() => {
+  //   editor.update(() => {
+  //     const tableNode = $getTableNodeFromLexicalNodeOrThrow(tableCellNode);
+  //
+  //     const tableColumnIndex =
+  //       $getTableColumnIndexFromTableCellNode(tableCellNode);
+  //
+  //     const tableRows = tableNode.getChildren();
+  //
+  //     for (let r = 0; r < tableRows.length; r++) {
+  //       const tableRow = tableRows[r];
+  //
+  //       if (!$isTableRowNode(tableRow)) {
+  //         throw new Error('Expected table row');
+  //       }
+  //
+  //       const tableCells = tableRow.getChildren();
+  //
+  //       if (tableColumnIndex >= tableCells.length || tableColumnIndex < 0) {
+  //         throw new Error('Expected table cell to be inside of table row.');
+  //       }
+  //
+  //       const tableCell = tableCells[tableColumnIndex];
+  //
+  //       if (!$isTableCellNode(tableCell)) {
+  //         throw new Error('Expected table cell');
+  //       }
+  //
+  //       tableCell.toggleHeaderStyle(TableCellHeaderStates.COLUMN);
+  //     }
+  //
+  //     clearTableSelection();
+  //     onClose();
+  //   });
+  // }, [editor, tableCellNode, clearTableSelection, onClose]);
 
   return createPortal(
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
@@ -428,33 +454,42 @@ function TableActionMenu({
           {t('toolbar:tableActionMenuPlugin.Delete_table')}
         </span>
       </button>
-      <hr />
       <button
-        className="item"
-        onClick={() => toggleTableRowIsHeader()}
-        type="button"
+          className="item"
+          onClick={() => makeTransparent()}
+          type="button"
       >
         <span className="text">
-          {(tableCellNode.__headerState & TableCellHeaderStates.ROW) ===
-          TableCellHeaderStates.ROW
-            ? t('action:Remove')
-            : t('action:Add')}{' '}
-          {t('toolbar:tableActionMenuPlugin.row_header')}
+          {t('toolbar:tableActionMenuPlugin.Make_transparent')}
         </span>
       </button>
-      <button
-        className="item"
-        onClick={() => toggleTableColumnIsHeader()}
-        type="button"
-      >
-        <span className="text">
-          {(tableCellNode.__headerState & TableCellHeaderStates.COLUMN) ===
-          TableCellHeaderStates.COLUMN
-            ? t('action:Remove')
-            : t('action:Add ')}{' '}
-          {t('toolbar:tableActionMenuPlugin.column_header')}
-        </span>
-      </button>
+      {/*<hr />*/}
+      {/*<button*/}
+      {/*  className="item"*/}
+      {/*  onClick={() => toggleTableRowIsHeader()}*/}
+      {/*  type="button"*/}
+      {/*>*/}
+      {/*  <span className="text">*/}
+      {/*    {(tableCellNode.__headerState & TableCellHeaderStates.ROW) ===*/}
+      {/*    TableCellHeaderStates.ROW*/}
+      {/*      ? t('action:Remove')*/}
+      {/*      : t('action:Add')}{' '}*/}
+      {/*    {t('toolbar:tableActionMenuPlugin.row_header')}*/}
+      {/*  </span>*/}
+      {/*</button>*/}
+      {/*<button*/}
+      {/*  className="item"*/}
+      {/*  onClick={() => toggleTableColumnIsHeader()}*/}
+      {/*  type="button"*/}
+      {/*>*/}
+      {/*  <span className="text">*/}
+      {/*    {(tableCellNode.__headerState & TableCellHeaderStates.COLUMN) ===*/}
+      {/*    TableCellHeaderStates.COLUMN*/}
+      {/*      ? t('action:Remove')*/}
+      {/*      : t('action:Add ')}{' '}*/}
+      {/*    {t('toolbar:tableActionMenuPlugin.column_header')}*/}
+      {/*  </span>*/}
+      {/*</button>*/}
     </div>,
     document.body
   );

@@ -287,3 +287,20 @@
   background: rgba(255, 212, 0, 0.7);
   border-bottom: 2px solid rgba(255, 212, 0, 0.7);
 }
+
+
+PlaygroundEditorTheme__table.transparentBorder th {
+  border: 1px solid transparent !important;
+}
+PlaygroundEditorTheme__table.transparentBorder tr {
+  border: 1px solid transparent !important;
+}
+PlaygroundEditorTheme__table.transparentBorder td {
+  border: 1px solid transparent !important;
+}
+
+.transparentBorder th, .transparentBorder td, .transparentBorder td {
+  border: 1px solid transparent !important;
+}
+
+
