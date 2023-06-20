@@ -8,7 +8,7 @@ import ImagesPlugin, {
   INSERT_IMAGE_COMMAND,
   InsertImagePayload,
 } from '../../ImagesPlugin';
-import { INSERT_TABLE_COMMAND } from '@lexical/table';
+import { INSERT_TABLE_COMMAND } from '../../../nodes/lexical-table/src';
 import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode';
 import PollPlugin, { INSERT_POLL_COMMAND } from '../../PollPlugin';
 import TwitterPlugin, { INSERT_TWEET_COMMAND } from '../../TwitterPlugin';

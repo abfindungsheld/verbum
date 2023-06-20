@@ -11,8 +11,7 @@ import {
   $deleteTableColumn,
   $getElementGridForTableNode,
   $getTableCellNodeFromLexicalNode,
-  $getTableColumnIndexFromTableCellNode,
-  $getTableNodeFromLexicalNodeOrThrow,
+  $getTableColumnIndexFromTableCellNode, $getTableNodeFromLexicalNodeOrThrow,
   $getTableRowIndexFromTableCellNode,
   $insertTableColumn,
   $insertTableRow,
@@ -21,9 +20,8 @@ import {
   $removeTableRowAtIndex,
   getTableSelectionFromTableElement,
   HTMLTableElementWithWithTableSelectionState,
-  TableCellHeaderStates,
-  TableCellNode,
-} from '@lexical/table';
+  TableCellHeaderStates, TableCellNode,
+} from '../nodes/lexical-table/src';
 import { TFunction } from 'i18next';
 import {
   $getSelection,
@@ -35,7 +33,6 @@ import * as React from 'react';
 import { ReactPortal, useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
-import {addClassNamesToElement} from "@lexical/utils";
 
 type TableCellActionMenuProps = Readonly<{
   contextRef: { current: null | HTMLElement };
@@ -138,7 +135,7 @@ function TableActionMenu({
 
         const tableSelection = getTableSelectionFromTableElement(tableElement);
         if (tableSelection !== null) {
-          tableSelection.clearHighlight();
+          tableSelection?.clearHighlight();
         }
 
         tableNode.markDirty();
@@ -270,11 +267,33 @@ function TableActionMenu({
         editor.update(() => {
 
           const tableNode = $getTableNodeFromLexicalNodeOrThrow(tableCellNode);
-          const tableElement = editor.getElementByKey(
-              tableNode.getKey()
-          ) as HTMLTableElementWithWithTableSelectionState;
+          const tableRows = tableNode.getChildren()
+          for (let r = 0; r < tableRows.length; r++) {
+            const tableRow = tableRows[r];
 
-          addClassNamesToElement(tableElement, ' transparentBorder')
+            if (!$isTableRowNode(tableRow)) {
+              throw new Error('Expected table row');
+            }
+
+            const tableCells = tableRow.getChildren();
+            // tableCells.forEach(cell => cell.setBordrer('1px solid white'))
+            tableCells.forEach(cell => {
+              // debugger
+              // @ts-ignore
+              cell.setBorder('1px solid red')
+            })
+          }
+
+          // const tableElement = editor.getElementByKey(
+          //     tableNode.getKey()
+          // ) as HTMLTableElementWithWithTableSelectionState;
+          // convertTableCellNodeElement(tableElement)
+          // tableElement.style.border = '1px solid white'
+          // tableElement.children
+          // console.log('tableElement.childNodes', tableElement)
+          // addClassNamesToElement(tableElement, ' transparentBorder')
+          // console.log('tableElement', tableElement.outerHTML)
+          tableNode.selectEnd()
           clearTableSelection();
 
           onClose();

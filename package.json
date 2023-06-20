@@ -103,7 +103,6 @@
     "@lexical/react": "0.11.0",
     "@lexical/rich-text": "0.11.0",
     "@lexical/selection": "0.11.0",
-    "@lexical/table": "0.11.0",
     "@lexical/utils": "0.11.0",
     "i18next": "^22.0.3",
     "i18next-browser-languagedetector": "^7.0.0",
