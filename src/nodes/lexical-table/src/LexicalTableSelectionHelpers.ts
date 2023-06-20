@@ -1006,6 +1006,7 @@ export function getCellFromTarget(node: Node): Cell | null {
   let currentNode: ParentNode | Node | null = node;
 
   while (currentNode != null) {
+    // @ts-expect-error: internal field
     const nodeName = currentNode.nodeName;
 
     if (nodeName === 'TD' || nodeName === 'TH') {
@@ -1018,7 +1019,7 @@ export function getCellFromTarget(node: Node): Cell | null {
 
       return cell;
     }
-
+    // @ts-expect-error: internal field
     currentNode = currentNode.parentNode;
   }
 

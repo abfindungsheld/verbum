@@ -129,6 +129,7 @@ const Editor = ({
               if (editor) {
                 editor.update(() => {
                   const raw = $generateHtmlFromNodes(editor, null)
+                  console.log(raw)
                   return onChange?.(raw)
                 })
               }

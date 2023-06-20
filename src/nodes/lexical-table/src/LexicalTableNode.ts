@@ -87,6 +87,7 @@ export class TableNode extends DEPRECATED_GridNode {
       ...super.exportDOM(editor),
       after: (tableElement) => {
         if (tableElement) {
+          // @ts-expect-error: internal field
           const newElement = tableElement.cloneNode() as ParentNode;
           const colGroup = document.createElement('colgroup');
           const tBody = document.createElement('tbody');
@@ -103,7 +104,7 @@ export class TableNode extends DEPRECATED_GridNode {
             const col = document.createElement('col');
             colGroup.append(col);
           }
-
+          // @ts-expect-error: internal field
           newElement.replaceChildren(colGroup, tBody);
 
           return newElement as HTMLElement;
