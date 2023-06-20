@@ -149,7 +149,7 @@
       "Delete_column": "Supprimer la colonne",
       "Delete_row": "Supprimer une ligne",
       "Delete_table": "Supprimer la table",
-      "Make_transparent": "Supprimer la table 123",
+      "Toggle_transparent": "Supprimer la table 123",
       "column": "colonne",
       "row": "ligne",
       "columns": "colonnes",

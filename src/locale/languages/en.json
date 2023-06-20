@@ -149,7 +149,7 @@
       "Delete_column": "Delete column",
       "Delete_row": "Delete row",
       "Delete_table": "Delete table",
-      "Make_transparent": "Make transparent",
+      "Toggle_transparent": "Toggle transparent",
       "column": "column",
       "row": "row",
       "columns": "columns",

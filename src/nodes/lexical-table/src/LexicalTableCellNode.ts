@@ -134,7 +134,7 @@ export class TableCellNode extends DEPRECATED_GridCellNode {
       element.style.backgroundColor = this.__backgroundColor;
     }
     if (this.__border !== null) {
-      element.style.backgroundColor = this.__border;
+      element.style.border = this.__border;
     }
 
     addClassNamesToElement(
@@ -153,7 +153,7 @@ export class TableCellNode extends DEPRECATED_GridCellNode {
       const element_ = element as HTMLTableCellElement;
       const maxWidth = 700;
       const colCount = this.getParentOrThrow().getChildrenSize();
-      element_.style.border = '1px solid black';
+      element_.style.border = this.__border || '1px solid black';
       if (this.__colSpan > 1) {
         element_.colSpan = this.__colSpan;
       }
@@ -173,6 +173,11 @@ export class TableCellNode extends DEPRECATED_GridCellNode {
       } else if (this.hasHeader()) {
         element_.style.backgroundColor = '#f2f3f5';
       }
+
+      const border = this.getBorder();
+      if (border !== null) {
+        element_.style.border = border;
+      }
     }
 
     return {
@@ -187,6 +192,7 @@ export class TableCellNode extends DEPRECATED_GridCellNode {
       headerState: this.__headerState,
       type: 'tablecell',
       width: this.getWidth(),
+      border: this.getBorder(),
     };
   }
 

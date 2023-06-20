@@ -262,7 +262,7 @@ function TableActionMenu({
   }, [editor, tableCellNode, clearTableSelection, onClose]);
 
 
-  const makeTransparent = useCallback(
+  const toggleTransparent = useCallback(
       () => {
         editor.update(() => {
 
@@ -274,26 +274,15 @@ function TableActionMenu({
             if (!$isTableRowNode(tableRow)) {
               throw new Error('Expected table row');
             }
-
-            const tableCells = tableRow.getChildren();
-            // tableCells.forEach(cell => cell.setBordrer('1px solid white'))
+            const tableCells: TableCellNode[] = tableRow.getChildren();
             tableCells.forEach(cell => {
-              // debugger
-              // @ts-ignore
-              cell.setBorder('1px solid red')
+              if (cell.getBorder() === '1px solid white') {
+                cell.setBorder('1px solid black')
+              } else {
+                cell.setBorder('1px solid white')
+              }
             })
           }
-
-          // const tableElement = editor.getElementByKey(
-          //     tableNode.getKey()
-          // ) as HTMLTableElementWithWithTableSelectionState;
-          // convertTableCellNodeElement(tableElement)
-          // tableElement.style.border = '1px solid white'
-          // tableElement.children
-          // console.log('tableElement.childNodes', tableElement)
-          // addClassNamesToElement(tableElement, ' transparentBorder')
-          // console.log('tableElement', tableElement.outerHTML)
-          tableNode.selectEnd()
           clearTableSelection();
 
           onClose();
@@ -307,73 +296,6 @@ function TableActionMenu({
         onClose,
       ]
   );
-  //
-  // const toggleTableRowIsHeader = useCallback(() => {
-  //   editor.update(() => {
-  //     const tableNode = $getTableNodeFromLexicalNodeOrThrow(tableCellNode);
-  //
-  //     const tableRowIndex = $getTableRowIndexFromTableCellNode(tableCellNode);
-  //
-  //     const tableRows = tableNode.getChildren();
-  //
-  //     if (tableRowIndex >= tableRows.length || tableRowIndex < 0) {
-  //       throw new Error('Expected table cell to be inside of table row.');
-  //     }
-  //
-  //     const tableRow = tableRows[tableRowIndex];
-  //
-  //     if (!$isTableRowNode(tableRow)) {
-  //       throw new Error('Expected table row');
-  //     }
-  //
-  //     tableRow.getChildren().forEach((tableCell) => {
-  //       if (!$isTableCellNode(tableCell)) {
-  //         throw new Error('Expected table cell');
-  //       }
-  //
-  //       tableCell.toggleHeaderStyle(TableCellHeaderStates.ROW);
-  //     });
-  //
-  //     clearTableSelection();
-  //     onClose();
-  //   });
-  // }, [editor, tableCellNode, clearTableSelection, onClose]);
-  //
-  // const toggleTableColumnIsHeader = useCallback(() => {
-  //   editor.update(() => {
-  //     const tableNode = $getTableNodeFromLexicalNodeOrThrow(tableCellNode);
-  //
-  //     const tableColumnIndex =
-  //       $getTableColumnIndexFromTableCellNode(tableCellNode);
-  //
-  //     const tableRows = tableNode.getChildren();
-  //
-  //     for (let r = 0; r < tableRows.length; r++) {
-  //       const tableRow = tableRows[r];
-  //
-  //       if (!$isTableRowNode(tableRow)) {
-  //         throw new Error('Expected table row');
-  //       }
-  //
-  //       const tableCells = tableRow.getChildren();
-  //
-  //       if (tableColumnIndex >= tableCells.length || tableColumnIndex < 0) {
-  //         throw new Error('Expected table cell to be inside of table row.');
-  //       }
-  //
-  //       const tableCell = tableCells[tableColumnIndex];
-  //
-  //       if (!$isTableCellNode(tableCell)) {
-  //         throw new Error('Expected table cell');
-  //       }
-  //
-  //       tableCell.toggleHeaderStyle(TableCellHeaderStates.COLUMN);
-  //     }
-  //
-  //     clearTableSelection();
-  //     onClose();
-  //   });
-  // }, [editor, tableCellNode, clearTableSelection, onClose]);
 
   return createPortal(
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
@@ -475,40 +397,13 @@ function TableActionMenu({
       </button>
       <button
           className="item"
-          onClick={() => makeTransparent()}
+          onClick={() => toggleTransparent()}
           type="button"
       >
         <span className="text">
-          {t('toolbar:tableActionMenuPlugin.Make_transparent')}
+          {t('toolbar:tableActionMenuPlugin.Toggle_transparent')}
         </span>
       </button>
-      {/*<hr />*/}
-      {/*<button*/}
-      {/*  className="item"*/}
-      {/*  onClick={() => toggleTableRowIsHeader()}*/}
-      {/*  type="button"*/}
-      {/*>*/}
-      {/*  <span className="text">*/}
-      {/*    {(tableCellNode.__headerState & TableCellHeaderStates.ROW) ===*/}
-      {/*    TableCellHeaderStates.ROW*/}
-      {/*      ? t('action:Remove')*/}
-      {/*      : t('action:Add')}{' '}*/}
-      {/*    {t('toolbar:tableActionMenuPlugin.row_header')}*/}
-      {/*  </span>*/}
-      {/*</button>*/}
-      {/*<button*/}
-      {/*  className="item"*/}
-      {/*  onClick={() => toggleTableColumnIsHeader()}*/}
-      {/*  type="button"*/}
-      {/*>*/}
-      {/*  <span className="text">*/}
-      {/*    {(tableCellNode.__headerState & TableCellHeaderStates.COLUMN) ===*/}
-      {/*    TableCellHeaderStates.COLUMN*/}
-      {/*      ? t('action:Remove')*/}
-      {/*      : t('action:Add ')}{' '}*/}
-      {/*    {t('toolbar:tableActionMenuPlugin.column_header')}*/}
-      {/*  </span>*/}
-      {/*</button>*/}
     </div>,
     document.body
   );
