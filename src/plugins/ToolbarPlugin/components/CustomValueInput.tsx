@@ -1,11 +1,11 @@
-import React, {useState} from "react";
+import React, {FC, useState} from "react";
 
 type TCustomValueInput = {
     submitHandler: (value: string) => void;
     defaultValue?: string
 }
 
-export const CustomValueInput = ({submitHandler, defaultValue}) => {
+export const CustomValueInput: FC<TCustomValueInput> = ({submitHandler, defaultValue}) => {
     const [value, setValue] = useState<string>(defaultValue)
     const submitWrapper = () => value && submitHandler(value);
     return (

@@ -1,5 +1,4 @@
 import React, {useCallback, useContext, useState} from 'react';
-import Select from '../../../ui/Select';
 import ToolbarContext from '../../../context/ToolbarContext';
 import {FontOptions} from '../../../types';
 import LineHeightOptions from "../../../types/LineHeightOptions";
@@ -35,11 +34,9 @@ const LineHeightDropdown = ({
                                 lineHeights = defaultLineHeightOptions,
                             }: ILineHeightDropdown) => {
     const {lineHeight, applyStyleText} = useContext(ToolbarContext);
-    // const [customLineHeight, setCustomLineHeight] = useState(0)
 
     const onLineHeightSelect = useCallback(
         (value) => {
-            console.log(value)
             applyStyleText({'line-height': value});
         },
         [applyStyleText]
@@ -54,10 +51,6 @@ const LineHeightDropdown = ({
                 buttonLabel={lineHeight.replace('em', '')}
                 buttonAriaLabel={'Formatting options for line height'}
             >
-                {/*<span className='item' style={{display: "flex", flexDirection: 'column'}}>*/}
-                {/*    <input type='number' onClick={e => e.stopPropagation()} onChange={e => setCustomLineHeight(+e.target.value)}/>*/}
-                {/*    <button onClick={submitCustomLineHeight}>Set</button>*/}
-                {/*</span>*/}
                 <CustomValueInput submitHandler={submitCustomLineHeight} defaultValue={lineHeight.replace('em', '')}/>
                 {lineHeights.map(
                     ([option, text]) => (
