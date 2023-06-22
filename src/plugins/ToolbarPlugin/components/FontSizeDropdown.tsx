@@ -1,8 +1,8 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react';
-import DropDown, {DropDownItem} from '../../../ui/DropDown';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import DropDown, { DropDownItem } from '../../../ui/DropDown';
 import ToolbarContext from '../../../context/ToolbarContext';
 import { FontOptions } from '../../../types';
-import {CustomValueInput} from "./CustomValueInput";
+import { CustomValueInput } from './CustomValueInput';
 
 const defaultFontSizeOptions: FontOptions = [
   ['10pt', '10'],
@@ -38,26 +38,35 @@ const FontSizeDropdown = ({
     },
     [applyStyleText]
   );
-  const submitCustomLineHeight = (value) => applyStyleText({'font-size': `${value}pt`});
-
+  const submitCustomLineHeight = (value) =>
+    applyStyleText({ 'font-size': `${value}pt` });
 
   return (
     <>
       <DropDown
         buttonClassName={'toolbar-item font-size'}
         buttonLabel={fontSize.replace(/(pt|px)/g, '')}
-        buttonAriaLabel={'Formatting options for font family'}>
-        <CustomValueInput submitHandler={submitCustomLineHeight} defaultValue={fontSize.replace(/\b(pt|px)\b/g, '')}/>
-        {fontSizeOptions.map(
-          ([option, text]) => (
+        buttonAriaLabel={'Formatting options for font family'}
+      >
+        <div>
+          <CustomValueInput
+            defaultValue={fontSize.replace(/\b(pt|px)\b/g, '')}
+            submitHandler={submitCustomLineHeight}
+          />
+          {fontSizeOptions.map(([option, text]) => (
             <DropDownItem
-              className={`item ${dropDownActiveClass(fontSize === option)} fontsize-item`}
+              className={`item ${dropDownActiveClass(
+                fontSize === option
+              )} fontsize-item`}
               onClick={() => onFontSizeSelect(option)}
-              key={option}>
-              <span style={{ fontSize: option }} className="text">{text}</span>
+              key={option}
+            >
+              <span style={{ fontSize: option }} className="text">
+                {text}
+              </span>
             </DropDownItem>
-          ),
-        )}
+          ))}
+        </div>
       </DropDown>
     </>
   );
