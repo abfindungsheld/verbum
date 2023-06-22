@@ -186,7 +186,7 @@ const ToolbarPlugin = ({
           $getSelectionStyleValueForProperty(
               selection,
               'line-height',
-              defaultFontFamily
+              defaultLineHeight
           )
       );
     }

@@ -162,6 +162,10 @@
   margin: 0;
   margin-left: 16px;
 }
+.PlaygroundEditorTheme__ol1 li::marker {
+  color: red !important;
+  font-size: inherit !important;
+}
 .PlaygroundEditorTheme__ol2 {
   padding: 0;
   margin: 0;

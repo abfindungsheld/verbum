@@ -36,7 +36,7 @@ const FontFamilyDropdown = ({
     <>
       <DropDown
         buttonClassName={'toolbar-item'}
-        buttonLabel={fontFamily || 'Arial'}
+        buttonLabel={fontFamily.replace(/^(.*?),.*/, '$1') || 'Arial'}
         buttonAriaLabel={'Formatting options for font family'}>
         {fontOptions.map(
           ([option, text]) => (

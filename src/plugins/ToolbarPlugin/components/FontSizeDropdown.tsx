@@ -1,20 +1,21 @@
-import React, { useCallback, useContext } from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import DropDown, {DropDownItem} from '../../../ui/DropDown';
 import ToolbarContext from '../../../context/ToolbarContext';
 import { FontOptions } from '../../../types';
+import {CustomValueInput} from "./CustomValueInput";
 
 const defaultFontSizeOptions: FontOptions = [
-  ['10px', '10'],
-  ['11px', '11'],
-  ['12px', '12'],
-  ['13px', '13'],
-  ['14px', '14'],
-  ['15px', '15'],
-  ['16px', '16'],
-  ['17px', '17'],
-  ['18px', '18'],
-  ['19px', '19'],
-  ['20px', '20'],
+  ['10pt', '10'],
+  ['11pt', '11'],
+  ['12pt', '12'],
+  ['13pt', '13'],
+  ['14pt', '14'],
+  ['15pt', '15'],
+  ['16pt', '16'],
+  ['17pt', '17'],
+  ['18pt', '18'],
+  ['19pt', '19'],
+  ['20pt', '20'],
 ];
 
 interface IFontSizeDropdown {
@@ -37,13 +38,16 @@ const FontSizeDropdown = ({
     },
     [applyStyleText]
   );
+  const submitCustomLineHeight = (value) => applyStyleText({'font-size': `${value}pt`});
+
 
   return (
     <>
       <DropDown
         buttonClassName={'toolbar-item font-size'}
-        buttonLabel={fontSize.slice(0,2)}
+        buttonLabel={fontSize.replace(/(pt|px)/g, '')}
         buttonAriaLabel={'Formatting options for font family'}>
+        <CustomValueInput submitHandler={submitCustomLineHeight} defaultValue={fontSize.replace(/\b(pt|px)\b/g, '')}/>
         {fontSizeOptions.map(
           ([option, text]) => (
             <DropDownItem
