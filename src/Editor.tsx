@@ -80,6 +80,15 @@ const Editor = ({
 
   const { i18n } = useTranslation();
 
+  const replaceContentTransformer = (content) => {
+    let updatedContent = content;
+
+    // replacing all <b></b> tags
+    updatedContent = updatedContent.replace(/<\/?b>/g, '')
+
+    return updatedContent
+  }
+
   useEffect(() => {
     editor.setEditable(isEditable);
 
@@ -128,7 +137,7 @@ const Editor = ({
             onChange={(editorState, editor ) => {
               if (editor) {
                 editor.update(() => {
-                  const raw = $generateHtmlFromNodes(editor, null)
+                  const raw = replaceContentTransformer($generateHtmlFromNodes(editor, null))
                   return onChange?.(raw)
                 })
               }
