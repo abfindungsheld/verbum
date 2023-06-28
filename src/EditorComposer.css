@@ -602,9 +602,18 @@ select.font-family {
   height: 1px;
 }
 
+.dropdown-button-text {
+  max-width: 40px;
+  /*text-overflow: ellipsis !important;*/
+  /*overflow-x: hidden !important;*/
+}
+
 @media screen and (max-width: 1000px) {
   .dropdown-button-text {
     display: none !important;
+  }
+  .font-size > .dropdown-button-text {
+    display: flex !important;
   }
 }
 
@@ -641,6 +650,14 @@ select.font-family {
 
 .icon.quote {
   background-image: url(images/icons/chat-square-quote.svg);
+}
+
+.icon.font-family {
+  background-image: url(images/icons/font-family.svg);
+}
+
+.icon.line-height {
+  background-image: url(images/icons/line-height.svg);
 }
 
 .icon.code {
@@ -1091,8 +1108,13 @@ button.action-button:disabled {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   vertical-align: middle;
-  overflow: auto;
+  overflow-y: visible;
+  overflow-x: scroll;
   height: 36px;
+}
+
+.toolbar::-webkit-scrollbar {
+  display: none;
 }
 
 .toolbar button.toolbar-item {

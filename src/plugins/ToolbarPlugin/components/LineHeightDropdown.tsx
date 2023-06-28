@@ -51,6 +51,7 @@ const LineHeightDropdown = ({
         buttonClassName={'toolbar-item'}
         buttonLabel={lineHeight.replace('em', '')}
         buttonAriaLabel={'Formatting options for line height'}
+        buttonIconClassName={'icon block-type line-height'}
       >
         <div>
           <CustomValueInput
