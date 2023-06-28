@@ -36,7 +36,7 @@ import Placeholder from './ui/Placeholder';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import EditorContext from './context/EditorContext';
-import {$createParagraphNode, $getRoot, $insertNodes, LexicalEditor} from 'lexical';
+import {$createParagraphNode, $getRoot, $insertNodes, LexicalEditor, $isElementNode, $isDecoratorNode} from 'lexical';
 import { useTranslation } from 'react-i18next';
 import DragDropPaste from './plugins/DragDropPastePlugin';
 import { $generateHtmlFromNodes, $generateNodesFromDOM } from '@lexical/html';
@@ -104,11 +104,7 @@ const Editor = ({
 
       const nodes = $generateNodesFromDOM(editor, dom);
 
-      const paragraphNode = $createParagraphNode();
-
-      nodes.forEach((n)=> paragraphNode.append(n))
-
-      root.append(paragraphNode);
+      nodes.forEach((node, i) => root.append(node))
     })
   }, [template])
 
