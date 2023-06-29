@@ -103,8 +103,10 @@ const Editor = ({
       const root = $getRoot()
 
       const nodes = $generateNodesFromDOM(editor, dom);
+      const paragraphNode = $createParagraphNode();
 
-      nodes.forEach((node, i) => root.append(node))
+      nodes.forEach((n)=> paragraphNode.append(n))
+      root.append(paragraphNode);
     })
   }, [template])
 
