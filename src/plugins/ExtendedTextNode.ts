@@ -76,6 +76,7 @@ function patchStyleConversion(
         const fontFamily = node.style.fontFamily;
         const fontSize = node.style.fontSize;
         const textDecoration = node.style.textDecoration;
+        const lineHeight = node.style.lineHeight;
 
         return {
             ...originalOutput,
@@ -89,6 +90,7 @@ function patchStyleConversion(
                         fontFamily ? `font-family: ${fontFamily}` : null,
                         fontSize ? `font-size: ${fontSize}` : null,
                         textDecoration ? `text-decoration: ${textDecoration}` : null,
+                        lineHeight ? `line-height: ${lineHeight}` : null,
                     ]
                         .filter((value) => value != null)
                         .join('; ');
