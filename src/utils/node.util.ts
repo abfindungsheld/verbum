@@ -18,3 +18,11 @@ export function getSelectedNode(
     return $isAtNodeEnd(anchor) ? focusNode : anchorNode;
   }
 }
+
+
+export const getFontValueFromChildStyle = (childStyles) => {
+  const regex = /.*font-size:\s*([^;]+).*/;
+  const match = childStyles?.match(regex);
+  const fontSize = match ? match[1]?.trim() : null;
+  return fontSize
+}

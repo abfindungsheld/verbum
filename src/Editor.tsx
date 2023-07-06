@@ -39,7 +39,7 @@ import EditorContext from './context/EditorContext';
 import {$createParagraphNode, $getRoot, $insertNodes, LexicalEditor, $isElementNode, $isDecoratorNode} from 'lexical';
 import { useTranslation } from 'react-i18next';
 import DragDropPaste from './plugins/DragDropPastePlugin';
-import { $generateHtmlFromNodes, $generateNodesFromDOM } from '@lexical/html';
+import {$generateHtmlFromNodes, $generateNodesFromDOM} from "@lexical/html";
 
 interface IEditorProps {
   children?: ReactNode;

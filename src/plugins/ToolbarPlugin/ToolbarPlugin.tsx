@@ -8,7 +8,7 @@
 
 import { $isCodeNode } from '@lexical/code';
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
-import { $isListNode, ListNode } from '@lexical/list';
+import { $isListNode } from '@lexical/list';
 import { $isHeadingNode } from '@lexical/rich-text';
 import {
   $getSelectionStyleValueForProperty,
@@ -38,6 +38,7 @@ import RedoButton from './components/RedoButton';
 import CodeLanguageDropdown from './components/CodeLanguageDropdown';
 import BlockFormatDropdown from './components/BlockFormatDropdown';
 import Divider from '../../ui/Divider';
+import {ListNode} from "../../pakages/lexical-list/src/index";
 
 const supportedBlockTypes = new Set([
   'paragraph',

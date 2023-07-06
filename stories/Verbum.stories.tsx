@@ -38,7 +38,8 @@ const initialState = () => {
   root.selectEnd();
 };
 
-const template = `<p class="PlaygroundEditorTheme__paragraph" dir="ltr"><p class="PlaygroundEditorTheme__paragraph" dir="ltr"><span style="font-size: 15pt; line-height: 3.25em;">another testâ</span></p><p class="PlaygroundEditorTheme__paragraph" dir="ltr"><span style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">test text</span></p><p class="PlaygroundEditorTheme__paragraph"><br></p><p class="PlaygroundEditorTheme__paragraph"><br></p><p class="PlaygroundEditorTheme__paragraph"><br></p><p class="PlaygroundEditorTheme__paragraph"><br></p></p>`
+const template = `<ol><li style="color: rgb(0, 0, 0); font-size: 18pt;"><span style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); font-size: 18pt;">qweqwe</span></li><li style="color: rgb(0, 0, 0); font-size: 18pt;"><span style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); font-size: 18pt;">asdsad</span></li><li style="color: rgb(0, 0, 0); font-size: 18pt;"><span style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); font-size: 18pt;">asdasd</span></li><li style="color: rgb(0, 0, 0); font-size: 18pt;"><span style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); font-size: 18pt;">asdasd</span></li><li style="color: rgb(0, 0, 0); font-size: 18pt;"><span style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); font-size: 18pt;">asdasd</span></li><li style="color: rgb(0, 0, 0); font-size: 18pt;"><span style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); font-size: 18pt;">asdasd</span></li></ol>`
+
 export const FullEditor = () => {
 
   const onChange = (html) => {
