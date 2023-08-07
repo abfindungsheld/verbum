@@ -101,7 +101,6 @@ const Editor = ({
       const parser = new DOMParser();
       const dom = parser.parseFromString(template, 'text/html');
       const root = $getRoot()
-
       const nodes = $generateNodesFromDOM(editor, dom);
       const paragraphNode = $createParagraphNode();
 

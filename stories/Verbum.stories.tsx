@@ -29,16 +29,7 @@ export default {
   title: 'Verbum',
 };
 
-const initialState = () => {
-  const paragraph = $createParagraphNode();
-  const text = $createTextNode('Hello World!');
-  paragraph.append(text);
-  const root = $getRoot();
-  root.append(paragraph);
-  root.selectEnd();
-};
-
-const template = `<ol><li style="color: rgb(0, 0, 0); font-size: 18pt;"><span style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); font-size: 18pt;">qweqwe</span></li><li style="color: rgb(0, 0, 0); font-size: 18pt;"><span style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); font-size: 18pt;">asdsad</span></li><li style="color: rgb(0, 0, 0); font-size: 18pt;"><span style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); font-size: 18pt;">asdasd</span></li><li style="color: rgb(0, 0, 0); font-size: 18pt;"><span style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); font-size: 18pt;">asdasd</span></li><li style="color: rgb(0, 0, 0); font-size: 18pt;"><span style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); font-size: 18pt;">asdasd</span></li><li style="color: rgb(0, 0, 0); font-size: 18pt;"><span style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); font-size: 18pt;">asdasd</span></li></ol>`
+const template = `<p style="line-height: 5;">lorem</p>`
 
 export const FullEditor = () => {
 
@@ -46,7 +37,7 @@ export const FullEditor = () => {
     // console.log('onChange html', html)
   }
   return (
-    <EditorComposer initialEditorState={initialState}>
+    <EditorComposer>
       <Editor onChange={onChange} template={template}>
         <ToolbarPlugin>
           <FontFamilyDropdown/>

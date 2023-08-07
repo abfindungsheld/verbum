@@ -11,7 +11,7 @@ import type { LexicalNode } from 'lexical';
 import { CodeHighlightNode, CodeNode } from '@lexical/code';
 import { HashtagNode } from '@lexical/hashtag';
 import { AutoLinkNode, LinkNode } from '@lexical/link';
-import { ListItemNode, ListNode } from '../pakages/lexical-list/src/index';
+import { ListItemNode, ListNode } from '../nodes/lexical-list/src';
 import { MarkNode } from '@lexical/mark';
 import { OverflowNode } from '@lexical/overflow';
 import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
@@ -29,8 +29,10 @@ import { TweetNode } from './TweetNode';
 import { TypeaheadNode } from './TypeaheadNode';
 import { YouTubeNode } from './YouTubeNode';
 import {ExtendedTextNode} from "../plugins/ExtendedTextNode";
+import { ParagraphNode } from "lexical";
+import {CustomParagraphNode} from "../nodes/CustomParagraphNode"
 
-const PlaygroundNodes: Array<Class<LexicalNode>> = [
+const PlaygroundNodes = [
   HeadingNode,
   ListNode,
   ListItemNode,
@@ -56,6 +58,13 @@ const PlaygroundNodes: Array<Class<LexicalNode>> = [
   YouTubeNode,
   MarkNode,
   ExtendedTextNode,
+  CustomParagraphNode,
+  {
+    replace: ParagraphNode,
+    with: (node) => {
+      return new CustomParagraphNode();
+    }
+  }
 ];
 
 export default PlaygroundNodes;

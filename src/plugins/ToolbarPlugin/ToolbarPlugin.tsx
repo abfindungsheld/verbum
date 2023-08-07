@@ -22,6 +22,7 @@ import {
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
   COMMAND_PRIORITY_CRITICAL,
+  RangeSelection,
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
 import * as React from 'react';
@@ -38,7 +39,7 @@ import RedoButton from './components/RedoButton';
 import CodeLanguageDropdown from './components/CodeLanguageDropdown';
 import BlockFormatDropdown from './components/BlockFormatDropdown';
 import Divider from '../../ui/Divider';
-import {ListNode} from "../../pakages/lexical-list/src/index";
+import { ListNode } from '../../nodes/lexical-list/src';
 
 const supportedBlockTypes = new Set([
   'paragraph',
@@ -184,14 +185,36 @@ const ToolbarPlugin = ({
         )
       );
       setLineHeight(
-          $getSelectionStyleValueForProperty(
-              selection,
-              'line-height',
-              defaultLineHeight
-          )
+        $getSelectionStyleValueForProperty(
+          selection,
+          'line-height',
+          defaultLineHeight
+        )
       );
     }
   }, [activeEditor]);
+
+  const patchParagraphNodes = (
+    selection: RangeSelection,
+    styles: Record<string, string>
+  ) => {
+    const selectedNodes = selection.getNodes();
+    const selectedNodesLength = selectedNodes.length;
+    const lineHeight = styles['line-height'];
+    if (selectedNodesLength < 1 || lineHeight === undefined) {
+      return;
+    }
+    selectedNodes.forEach((node) => {
+      if (node.getType() === 'custom-paragraph') {
+        node.setLineHeight(lineHeight);
+        return
+      }
+      const parentNode = node.getParent();
+      if (parentNode.getType() === 'custom-paragraph') {
+        parentNode.setLineHeight(lineHeight)
+      }
+    });
+  };
 
   useEffect(() => {
     return initialEditor.registerCommand(
@@ -236,6 +259,7 @@ const ToolbarPlugin = ({
       activeEditor.update(() => {
         const selection = $getSelection();
         if ($isRangeSelection(selection)) {
+          patchParagraphNodes(selection, styles)
           $patchStyleText(selection, styles);
         }
       });
@@ -274,19 +298,20 @@ const ToolbarPlugin = ({
         selectedElementKey,
         codeLanguage,
         blockType,
-        lineHeight
+        lineHeight,
       }}
     >
       <div className="toolbar">
         <UndoButton />
         <RedoButton />
         <Divider />
-        {supportedBlockTypes.has(blockType) && activeEditor === initialEditor && (
-          <>
-            <BlockFormatDropdown />
-            <Divider />
-          </>
-        )}
+        {supportedBlockTypes.has(blockType) &&
+          activeEditor === initialEditor && (
+            <>
+              <BlockFormatDropdown />
+              <Divider />
+            </>
+          )}
         {blockType === 'code' ? (
           <>
             <CodeLanguageDropdown />
