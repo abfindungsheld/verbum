@@ -51,8 +51,8 @@ export class CustomParagraphNode extends ParagraphNode {
 
   exportDOM(editor: LexicalEditor): DOMExportOutput {
     const { element } = super.exportDOM(editor);
-
-    if (element && this.isEmpty()) {
+    const hasLineBreak = element.innerHTML.includes('<br>');
+    if (element && this.isEmpty() && !hasLineBreak) {
       element.append(document.createElement('br'));
     }
     if (element) {
