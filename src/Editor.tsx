@@ -102,10 +102,20 @@ const Editor = ({
       const dom = parser.parseFromString(template, 'text/html');
       const root = $getRoot()
       const nodes = $generateNodesFromDOM(editor, dom);
-      const paragraphNode = $createParagraphNode();
+      if (template && template.length > 1) {
+        root.clear();
+      }
 
-      nodes.forEach((n)=> paragraphNode.append(n))
-      root.append(paragraphNode);
+      nodes.forEach((node) => {
+        if (!$isElementNode(node) && !$isDecoratorNode(node)) {
+          const paragraphNode = $createParagraphNode();
+          paragraphNode.append(node)
+          root.append(paragraphNode)
+          return
+        }
+        root.append(node)
+      })
+
     })
   }, [template])
 
