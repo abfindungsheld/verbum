@@ -49,6 +49,19 @@ export class CustomParagraphNode extends ParagraphNode {
     return dom;
   }
 
+  updateDOM(
+    prevNode: CustomParagraphNode,
+    dom: HTMLElement,
+    config: EditorConfig,
+  ): boolean {
+    const prevLineHeight = prevNode.__lineHeight;
+    const nextLineHeight = this.__lineHeight
+    if (prevLineHeight !== nextLineHeight) {
+      dom.style.lineHeight = nextLineHeight;
+    }
+    return false;
+  }
+
   exportDOM(editor: LexicalEditor): DOMExportOutput {
     const { element } = super.exportDOM(editor);
     const hasLineBreak = element.innerHTML.includes('<br>');
