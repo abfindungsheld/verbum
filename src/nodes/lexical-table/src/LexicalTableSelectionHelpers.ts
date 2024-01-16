@@ -50,7 +50,7 @@ import {
   KEY_TAB_COMMAND,
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
-import invariant from '../../../shared/src/invariant';
+import invariant from '../../../shared-ts/src/invariant';
 
 import {$isTableCellNode} from './LexicalTableCellNode';
 import {TableSelection} from './LexicalTableSelection';

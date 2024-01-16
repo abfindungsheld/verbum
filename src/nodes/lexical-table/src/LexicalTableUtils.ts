@@ -22,7 +22,7 @@ import {
   DEPRECATED_GridCellNode,
   LexicalNode,
 } from 'lexical';
-import invariant from '../../../shared/src/invariant';
+import invariant from '../../../shared-ts/src/invariant';
 
 import {InsertTableCommandPayloadHeaders} from '.';
 import {
@@ -184,7 +184,6 @@ export function $insertTableRow(
 
       for (let c = 0; c < tableColumnCount; c++) {
         const tableCellFromTargetRow = tableRowCells[c];
-
         invariant(
           $isTableCellNode(tableCellFromTargetRow),
           'Expected table cell',
@@ -234,7 +233,6 @@ export function $insertTableRow__EXPERIMENTAL(insertAfter = true): void {
     $isRangeSelection(selection) || DEPRECATED_$isGridSelection(selection),
     'Expected a RangeSelection or GridSelection',
   );
-  // @ts-expect-error: internal field
   const focus = selection.focus.getNode();
   const [focusCell, , grid] = DEPRECATED_$getNodeTriplet(focus);
   const [gridMap, focusCellMap] = DEPRECATED_$computeGridMap(
@@ -307,7 +305,6 @@ export function $insertTableColumn(
         invariant($isTableCellNode(targetCell), 'Expected table cell');
 
         const {left, right} = $getTableCellSiblingsFromTableCellNode(
-            // @ts-expect-error: internal field
           targetCell,
           grid,
         );
@@ -343,9 +340,7 @@ export function $insertTableColumn__EXPERIMENTAL(insertAfter = true): void {
     $isRangeSelection(selection) || DEPRECATED_$isGridSelection(selection),
     'Expected a RangeSelection or GridSelection',
   );
-  // @ts-expect-error: internal field
   const anchor = selection.anchor.getNode();
-  // @ts-expect-error: internal field
   const focus = selection.focus.getNode();
   const [anchorCell] = DEPRECATED_$getNodeTriplet(anchor);
   const [focusCell, , grid] = DEPRECATED_$getNodeTriplet(focus);
@@ -376,7 +371,6 @@ export function $insertTableColumn__EXPERIMENTAL(insertAfter = true): void {
     }
     return cell;
   }
-  // @ts-expect-error: internal field
   let loopRow: DEPRECATED_GridRowNode = gridFirstChild;
   rowLoop: for (let i = 0; i < rowCount; i++) {
     if (i !== 0) {
@@ -385,7 +379,6 @@ export function $insertTableColumn__EXPERIMENTAL(insertAfter = true): void {
         DEPRECATED_$isGridRowNode(currentRow),
         'Expected row nextSibling to be a row',
       );
-      // @ts-expect-error: internal field
       loopRow = currentRow;
     }
     const rowMap = gridMap[i];
@@ -453,9 +446,7 @@ export function $deleteTableRow__EXPERIMENTAL(): void {
     $isRangeSelection(selection) || DEPRECATED_$isGridSelection(selection),
     'Expected a RangeSelection or GridSelection',
   );
-  // @ts-expect-error: internal field
   const anchor = selection.anchor.getNode();
-  // @ts-expect-error: internal field
   const focus = selection.focus.getNode();
   const [anchorCell, , grid] = DEPRECATED_$getNodeTriplet(anchor);
   const [focusCell] = DEPRECATED_$getNodeTriplet(focus);
@@ -511,7 +502,6 @@ export function $deleteTableRow__EXPERIMENTAL(): void {
     invariant(
       DEPRECATED_$isGridRowNode(rowNode),
       'Expected GridNode childAtIndex(%s) to be RowNode',
-        // @ts-expect-error: internal field
       String(row),
     );
     rowNode.remove();
@@ -532,9 +522,7 @@ export function $deleteTableColumn__EXPERIMENTAL(): void {
     $isRangeSelection(selection) || DEPRECATED_$isGridSelection(selection),
     'Expected a RangeSelection or GridSelection',
   );
-  // @ts-expect-error: internal field
   const anchor = selection.anchor.getNode();
-  // @ts-expect-error: internal field
   const focus = selection.focus.getNode();
   const [anchorCell, , grid] = DEPRECATED_$getNodeTriplet(anchor);
   const [focusCell] = DEPRECATED_$getNodeTriplet(focus);
@@ -601,7 +589,7 @@ function $moveSelectionToCell(cell: DEPRECATED_GridCellNode): void {
   firstDescendant.getParentOrThrow().selectStart();
 }
 
-function $insertFirst(parent: ElementNode, node: LexicalNode): void {
+export function $insertFirst(parent: ElementNode, node: LexicalNode): void {
   const firstChild = parent.getFirstChild();
   if (firstChild !== null) {
     firstChild.insertBefore(node);
@@ -616,7 +604,6 @@ export function $unmergeCell(): void {
     $isRangeSelection(selection) || DEPRECATED_$isGridSelection(selection),
     'Expected a RangeSelection or GridSelection',
   );
-  // @ts-expect-error: internal field
   const anchor = selection.anchor.getNode();
   const [cell, row, grid] = DEPRECATED_$getNodeTriplet(anchor);
   const colSpan = cell.__colSpan;

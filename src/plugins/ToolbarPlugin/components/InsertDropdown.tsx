@@ -16,7 +16,7 @@ import YouTubePlugin, { INSERT_YOUTUBE_COMMAND } from '../../YouTubePlugin';
 import { $createStickyNode } from '../../../nodes/StickyNode';
 import useModal from '../../../hooks/useModal';
 import TableCellResizer from '../../TableCellResizer';
-import { TablePlugin } from '@lexical/react/LexicalTablePlugin';
+import { TablePlugin } from '../../TablePlugin';
 import TableCellActionMenuPlugin from '../../TableActionMenuPlugin';
 import HorizontalRulePlugin from '../../HorizontalRulePlugin';
 import EditorContext from '../../../context/EditorContext';

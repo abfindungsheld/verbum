@@ -178,6 +178,7 @@ export class ListNode extends ElementNode {
   append(...nodesToAppend: LexicalNode[]): this {
     for (let i = 0; i < nodesToAppend.length; i++) {
       const currentNode = nodesToAppend[i];
+
       if ($isListItemNode(currentNode)) {
         super.append(currentNode);
       } else {

@@ -28,7 +28,7 @@ import {
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
 import {CAN_USE_DOM} from '../../../shared/src/canUseDOM';
-import invariant from '../../../shared/src//invariant';
+import invariant from '../../../shared-ts/src/invariant';
 
 import {$isTableCellNode} from './LexicalTableCellNode';
 import {$isTableNode} from './LexicalTableNode';

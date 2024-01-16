@@ -22,7 +22,7 @@ import {
   NodeKey,
   ParagraphNode,
 } from 'lexical';
-import invariant from '../../../shared/src/invariant';
+import invariant from '../../../shared-ts/src/invariant';
 
 import {
   $createListItemNode,

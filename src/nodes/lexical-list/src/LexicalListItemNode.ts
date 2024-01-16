@@ -20,6 +20,8 @@ import type {
   RangeSelection,
   SerializedElementNode,
   Spread,
+  LexicalEditor,
+  DOMExportOutput
 } from 'lexical';
 
 import {
@@ -33,9 +35,9 @@ import {
   $isElementNode,
   $isParagraphNode,
   $isRangeSelection,
-  ElementNode, TextNode,
+  ElementNode,
 } from 'lexical';
-import invariant from '../../../shared/src/invariant';
+import invariant from '../../../shared-ts/src/invariant';
 
 import {$createListNode, $isListNode} from './';
 import {
@@ -45,20 +47,13 @@ import {
   updateChildrenListItemValue,
 } from './formatList';
 import {isNestedListNode} from './utils';
-import {getFontValueFromChildStyle} from "../../../utils/node.util";
-
-interface ListItemNodeWithStyle extends ListItemNode {
-  __style?: string;
-}
-
 
 export type SerializedListItemNode = Spread<
   {
     checked: boolean | undefined;
     value: number;
-    style?: string
   },
-    SerializedElementNode
+  SerializedElementNode
 >;
 
 /** @noInheritDoc */
@@ -67,37 +62,28 @@ export class ListItemNode extends ElementNode {
   __value: number;
   /** @internal */
   __checked?: boolean;
-  __style?: string;
 
   static getType(): string {
     return 'listitem';
   }
 
-  static clone(node: ListItemNodeWithStyle): ListItemNodeWithStyle {
-    return new ListItemNode(node.__value, node.__checked, node.__key, node.__style);
+  static clone(node: ListItemNode): ListItemNode {
+    return new ListItemNode(node.__value, node.__checked, node.__key);
   }
 
-  constructor(value?: number, checked?: boolean, key?: NodeKey, style?: string) {
+  constructor(value?: number, checked?: boolean, key?: NodeKey) {
     super(key);
     this.__value = value === undefined ? 1 : value;
     this.__checked = checked;
-    this.__style = style;
   }
 
   createDOM(config: EditorConfig): HTMLElement {
     const element = document.createElement('li');
     const parent = this.getParent();
-
-    const regex = /.*font-size:\s*([^;]+).*/;
-    const match = this.getChildren()[0]?.getStyle().match(regex);
-    const fontSize = match ? match[1].trim() : null;
-
     if ($isListNode(parent) && parent.getListType() === 'check') {
       updateListItemChecked(element, this, null, parent);
     }
     element.value = this.__value;
-    element.style.fontSize = fontSize;
-
     $setListItemThemeClassNames(element, config.theme, this);
     return element;
   }
@@ -107,18 +93,23 @@ export class ListItemNode extends ElementNode {
     dom: HTMLElement,
     config: EditorConfig,
   ): boolean {
-
-    const fontSize = getFontValueFromChildStyle(this.getChildren()[0]?.getStyle())
     const parent = this.getParent();
     if ($isListNode(parent) && parent.getListType() === 'check') {
       updateListItemChecked(dom, this, prevNode, parent);
     }
     // @ts-expect-error - this is always HTMLListItemElement
     dom.value = this.__value;
-    dom.style.fontSize = fontSize;
-
     $setListItemThemeClassNames(dom, config.theme, this);
+
     return false;
+  }
+
+  exportDOM(editor: LexicalEditor): DOMExportOutput {
+    const element = this.createDOM(editor._config);
+    element.style.textAlign = this.getFormatType();
+    return {
+      element,
+    };
   }
 
   static transform(): (node: LexicalNode) => void {
@@ -143,7 +134,7 @@ export class ListItemNode extends ElementNode {
   }
 
   static importJSON(serializedNode: SerializedListItemNode): ListItemNode {
-    const node = new ListItemNode(serializedNode.value, serializedNode.checked, serializedNode.style);
+    const node = new ListItemNode(serializedNode.value, serializedNode.checked);
     node.setFormat(serializedNode.format);
     node.setDirection(serializedNode.direction);
     return node;
@@ -156,7 +147,6 @@ export class ListItemNode extends ElementNode {
       type: 'listitem',
       value: this.getValue(),
       version: 1,
-      style: this.getStyle()
     };
   }
 
@@ -349,17 +339,6 @@ export class ListItemNode extends ElementNode {
   setValue(value: number): void {
     const self = this.getWritable();
     self.__value = value;
-  }
-
-  getStyle(): string {
-    const self = this.getLatest();
-
-    return self?.__style;
-  }
-
-  setStyle(value: string): void {
-    const self = this.getWritable();
-    self.__style = value;
   }
 
   getChecked(): boolean | undefined {
@@ -563,8 +542,8 @@ function convertListItemElement(domNode: Node): DOMConversionOutput {
  * @param checked - Is the List Item a checkbox and, if so, is it checked? undefined/null: not a checkbox, true/false is a checkbox and checked/unchecked, respectively.
  * @returns The new List Item.
  */
-export function $createListItemNode(checked?: boolean, style?: string): ListItemNode {
-  return $applyNodeReplacement(new ListItemNode(undefined, checked, null, style));
+export function $createListItemNode(checked?: boolean): ListItemNode {
+  return $applyNodeReplacement(new ListItemNode(undefined, checked));
 }
 
 /**
