@@ -4,12 +4,12 @@ import ToolbarContext from '../../../context/ToolbarContext';
 import { FontOptions } from '../../../types';
 
 const defaultFontFamilyOptions: FontOptions = [
-  ['Arial', 'Arial'],
-  ['Courier New', 'Courier New'],
-  ['Courier', 'Courier'],
-  ['Roboto', 'Roboto'],
-  ['Times New Roman', 'Times New Roman'],
-  ['Calibri', 'Calibri'],
+  ['arial', 'Arial'],
+  ['courier New', 'Courier New'],
+  ['courier', 'Courier'],
+  ['roboto', 'Roboto'],
+  ['times new roman', 'Times New Roman'],
+  ['calibri', 'Calibri'],
 ];
 
 interface IFontFamilyDropdown {

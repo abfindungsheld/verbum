@@ -201,15 +201,29 @@ const ToolbarPlugin = ({
     const selectedNodes = selection.getNodes();
     const selectedNodesLength = selectedNodes.length;
     const lineHeight = styles['line-height'];
-    if (selectedNodesLength < 1 || lineHeight === undefined) {
+    const fontSize = styles['font-size'];
+    const fontFamily = styles['font-family'];
+
+    if (selectedNodesLength < 1) {
       return;
     }
     selectedNodes.forEach((node) => {
+      if (node.getType() === 'listitem') {
+        lineHeight && node.setLineHeight(lineHeight);
+        fontFamily && node.setFontFamily(fontFamily);
+        fontSize && node.setFontSize(fontSize);
+        return
+      }
+      const parentNode = node.getParent();
+      if (parentNode.getType() === 'listitem') {
+        lineHeight && parentNode.setLineHeight(lineHeight);
+        fontFamily && parentNode.setFontFamily(fontFamily);
+        fontSize && parentNode.setFontSize(fontSize);
+      }
       if (node.getType() === 'custom-paragraph') {
         node.setLineHeight(lineHeight);
         return
       }
-      const parentNode = node.getParent();
       if (parentNode.getType() === 'custom-paragraph') {
         parentNode.setLineHeight(lineHeight)
       }

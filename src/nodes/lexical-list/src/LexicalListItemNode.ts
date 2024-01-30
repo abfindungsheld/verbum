@@ -21,7 +21,8 @@ import type {
   SerializedElementNode,
   Spread,
   LexicalEditor,
-  DOMExportOutput
+  DOMExportOutput,
+  ElementFormatType
 } from 'lexical';
 
 import {
@@ -62,24 +63,76 @@ export class ListItemNode extends ElementNode {
   __value: number;
   /** @internal */
   __checked?: boolean;
+  /** @internal */
+  __lineHeight?: string;
+  /** @internal */
+  __fontFamily?: string;
+  /** @internal */
+  __fontSize?: string;
 
   static getType(): string {
     return 'listitem';
   }
 
   static clone(node: ListItemNode): ListItemNode {
-    return new ListItemNode(node.__value, node.__checked, node.__key);
+    return new ListItemNode(node.__value, node.__checked, node.__key, node.__lineHeight, node.__fontFamily, node.__fontSize);
   }
 
-  constructor(value?: number, checked?: boolean, key?: NodeKey) {
+  constructor(value?: number, checked?: boolean, key?: NodeKey, lineHeight?: string, fontFamily?: string, fontSize?: string) {
     super(key);
     this.__value = value === undefined ? 1 : value;
     this.__checked = checked;
+    this.__lineHeight = lineHeight;
+    this.__fontFamily = fontFamily;
+    this.__fontSize = fontSize;
+
+  }
+  
+  setLineHeight(lineHeight: string | null): this {
+    const self = this.getWritable();
+    self.__lineHeight = lineHeight;
+    return self;
+  }
+
+  getLineHeight(): string | null {
+    const self = this.getLatest();
+    return self.__lineHeight;
+  }
+
+  setFontSize(fontSize: string | null): this {
+    const self = this.getWritable();
+    self.__fontSize = fontSize;
+    return self;
+  }
+
+  getFontSize(): string | null {
+    const self = this.getLatest();
+    return self.__fontSize;
+  }
+
+  setFontFamily(fontFamily: string | null): this {
+    const self = this.getWritable();
+    self.__fontFamily = fontFamily;
+    return self;
+  }
+
+  getFontFamily(): string | null {
+    const self = this.getLatest();
+    return self.__fontFamily;
   }
 
   createDOM(config: EditorConfig): HTMLElement {
     const element = document.createElement('li');
     const parent = this.getParent();
+    if (this.getLineHeight()) {
+      element.style.lineHeight = this.getLineHeight()
+    }
+    if (this.getFontSize()) {
+      element.style.fontSize = this.getFontSize()
+    }
+    if (this.getFontFamily()) {
+      element.style.fontFamily = this.getFontFamily()
+    }
     if ($isListNode(parent) && parent.getListType() === 'check') {
       updateListItemChecked(element, this, null, parent);
     }
@@ -99,6 +152,15 @@ export class ListItemNode extends ElementNode {
     }
     // @ts-expect-error - this is always HTMLListItemElement
     dom.value = this.__value;
+    if (this.getLineHeight()) {
+      dom.style.lineHeight = this.getLineHeight()
+    }
+    if (this.getFontSize()) {
+      dom.style.fontSize = this.getFontSize()
+    }
+    if (this.getFontFamily()) {
+      dom.style.fontFamily = this.getFontFamily()
+    }
     $setListItemThemeClassNames(dom, config.theme, this);
 
     return false;
@@ -106,7 +168,18 @@ export class ListItemNode extends ElementNode {
 
   exportDOM(editor: LexicalEditor): DOMExportOutput {
     const element = this.createDOM(editor._config);
+    console.log('element', element)
     element.style.textAlign = this.getFormatType();
+    if (this.getLineHeight()) {
+      element.style.lineHeight = this.getLineHeight()
+    }
+    if (this.getFontSize()) {
+      element.style.fontSize = this.getFontSize()
+    }
+    if (this.getFontFamily()) {
+      element.style.fontFamily = this.getFontFamily()
+    }
+
     return {
       element,
     };
@@ -532,9 +605,26 @@ function updateListItemChecked(
 }
 
 function convertListItemElement(domNode: Node): DOMConversionOutput {
+  const hasTextAlign = isHTMLElement(domNode) && domNode.style.textAlign
+  const hasLineHeight = isHTMLElement(domNode) && domNode.style.lineHeight
+  const hasFontFamily = isHTMLElement(domNode) && domNode.style.fontFamily
+  const hasFontSize = isHTMLElement(domNode) && domNode.style.fontSize
   const checked =
     isHTMLElement(domNode) && domNode.getAttribute('aria-checked') === 'true';
-  return {node: $createListItemNode(checked)};
+  const node = $createListItemNode(checked)
+  if (hasTextAlign) {
+    node.setFormat(hasTextAlign as ElementFormatType)
+  }
+  if (hasLineHeight) {
+    node.setLineHeight(hasLineHeight)
+  }
+  if (hasFontFamily) {
+    node.setFontFamily(hasFontFamily)
+  }
+  if (hasFontSize) {
+    node.setFontSize(hasFontSize)
+  }
+  return {node};
 }
 
 /**
